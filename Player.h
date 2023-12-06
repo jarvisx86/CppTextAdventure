@@ -1,7 +1,8 @@
 #pragma once
 #include <string>
+#include "Entity.h"
 
-class Player
+class Player : public Entity
 {
 private:
 	std::string m_name;
