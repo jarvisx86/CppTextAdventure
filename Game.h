@@ -1,17 +1,23 @@
 #include "Player.h"
 #include "PlayerOptions.h"
+#include "Room.h"
 
 #pragma once
 class Game
 {
-public:
-	void Run();
-
 private:
-	void WelcomePlayer(Player& player);
+	static const unsigned int m_numberOfRooms = 4;
+	Room m_rooms[m_numberOfRooms];
+
+	Player m_player;
+
+	void InitializeRooms();
+	void WelcomePlayer();
 	void GivePlayerOptions();
 	void GetPlayerInput(std::string& playerInput);
 	PlayerOptions EvaluateInput(std::string& playerInput);
 
+public:
+	void Run();
 };
 
