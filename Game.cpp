@@ -1,10 +1,10 @@
 #include <iostream>
 #include "Game.h"
 
-void Game::Run()
+void Game::RunGame()
 {
     Player player;
-    WelcomePlayer(player);
+    WelcomePlayer();
 
     bool shouldEnd = false;
     

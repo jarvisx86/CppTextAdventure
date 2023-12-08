@@ -4,5 +4,5 @@ int main() {
 
     Game newGame = Game();
 
-    newGame.Run();
+    newGame.RunGame();
 }

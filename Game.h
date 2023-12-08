@@ -18,6 +18,6 @@ private:
 	PlayerOptions EvaluateInput(std::string& playerInput);
 
 public:
-	void Run();
+	void RunGame();
 };
 
