@@ -57,7 +57,7 @@ void Game::WelcomePlayer()
 
     std::cout << "Hello " << playerName << "!" << std::endl;
 
-    m_player.SetPlayerName(playerName);
+    m_player.SetPlayerName(playerName); 
 }
 
 void Game::GivePlayerOptions()
