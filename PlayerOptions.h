@@ -2,7 +2,10 @@
 
 enum class PlayerOptions
 {
-	LookAround,
+	GoNorth,
+	GoEast,
+	GoSouth,
+	GoWest,
 	Quit,
 	None
 };
