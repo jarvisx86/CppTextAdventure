@@ -45,6 +45,8 @@ void Game::InitializeRooms()
 
     // Room 3 Heads East to Room 1
     m_rooms[3].AddRoom(Room::JoiningDirections::East, &m_rooms[1]);
+
+    m_player.SetCurrentRoom(&m_rooms[0]);
 }
 
 void Game::WelcomePlayer()
