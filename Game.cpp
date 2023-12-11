@@ -1,5 +1,28 @@
 #include <iostream>
 #include "Game.h"
+#include <sstream>
+
+Game::Game() 
+    : m_moveNorthOption(Room::JoiningDirections::North,
+        PlayerOptions::GoNorth,
+        "Go North")
+    , m_moveEastOption(Room::JoiningDirections::East,
+        PlayerOptions::GoEast,
+        "Go East")
+    , m_moveSouthOption(Room::JoiningDirections::South,
+        PlayerOptions::GoSouth,
+        "Go South")
+    , m_moveWestOption(Room::JoiningDirections::West,
+        PlayerOptions::GoWest,
+        "Go West")
+    , m_quitOption("Quit")
+{
+    m_options[0] = dynamic_cast<Option*>(&m_moveNorthOption);
+    m_options[1] = dynamic_cast<Option*>(&m_moveEastOption);
+    m_options[2] = dynamic_cast<Option*>(&m_moveSouthOption);
+    m_options[3] = dynamic_cast<Option*>(&m_moveWestOption);
+    m_options[4] = dynamic_cast<Option*>(&m_quitOption);
+}
 
 void Game::RunGame()
 {
@@ -18,11 +41,6 @@ void Game::RunGame()
 
         PlayerOptions selectedOption = EvaluateInput(playerInput);
         shouldEnd = selectedOption == PlayerOptions::Quit;
-        
-        if (shouldEnd == false)
-        {
-            UpdateOnOption(selectedOption);
-        }
     }
     
 }
@@ -73,11 +91,16 @@ void Game::GivePlayerOptions()
 {
     std::cout << "What would you like to do? (Enter a corresponding number)" << std::endl << std::endl;
     
-    std::cout << "1: Go North" << std::endl << std::endl;
-    std::cout << "2: Go East" << std::endl << std::endl;
-    std::cout << "3: Go South" << std::endl << std::endl;
-    std::cout << "4: Go West" << std::endl << std::endl;
-    std::cout << "5: Quit" << std::endl << std::endl;
+    for (unsigned int i = 0; i < m_numberOfOptions; ++i)
+    {
+        Option* pOption = m_options[i];
+        const unsigned int chosenOption = i + 1;
+        std::cout << chosenOption << ": " << pOption->GetOutputText() << std::endl << std::endl;
+
+        std::ostringstream chosenOptionString;
+        chosenOptionString << chosenOption;
+        pOption->SetOptionText(chosenOptionString.str());
+    }
 }
 
 void Game::GetPlayerInput(std::string& playerInput)
@@ -89,86 +112,21 @@ PlayerOptions Game::EvaluateInput(std::string& playerInput)
 {
     PlayerOptions chosenOption = PlayerOptions::None;
     
-    if (playerInput.compare("1") == 0)
+    for (unsigned int i = 0; i < m_numberOfOptions; ++i)
     {
-        std::cout << "You have chosen to go North!" << std::endl << std::endl;
-        chosenOption = PlayerOptions::GoNorth;
+        Option* pOption = m_options[i];
+        bool handled = pOption->Evaluate(playerInput, m_player);
+        if (handled == true)
+        {
+            chosenOption = pOption->GetChosenOption();
+            break;
+        }
     }
-    else if (playerInput.compare("2") == 0)
-    {
-        std::cout << "You have chosen to go East!" << std::endl << std::endl;
-        chosenOption = PlayerOptions::GoEast;
-    }
-    else if (playerInput.compare("3") == 0)
-    {
-        std::cout << "You have chosen to go South!" << std::endl << std::endl;
-        chosenOption = PlayerOptions::GoSouth;
-    }
-    else if (playerInput.compare("4") == 0)
-    {
-        std::cout << "You have chosen to go West!" << std::endl << std::endl;
-        chosenOption = PlayerOptions::GoWest;
-    }
-    else if (playerInput.compare("5") == 0) {
-        std::cout << "You have chosen to Quit!" << std::endl << std::endl;
-        chosenOption = PlayerOptions::Quit;
-    }
-    else 
+
+    if (chosenOption == PlayerOptions::None)
     {
         std::cout << "I don't recognize that option, try again!" << std::endl << std::endl;
     }
 
     return chosenOption;
-}
-
-void Game::UpdateOnOption(PlayerOptions selectedOption)
-{
-    if (selectedOption == PlayerOptions::GoNorth ||
-        selectedOption == PlayerOptions::GoEast ||
-        selectedOption == PlayerOptions::GoSouth ||
-        selectedOption == PlayerOptions::GoWest)
-    {
-        Room::JoiningDirections directionToMove = Room::JoiningDirections::North;
-
-        switch (selectedOption)
-        {
-        case PlayerOptions::GoEast:
-            directionToMove = Room::JoiningDirections::East;
-            break;
-        case PlayerOptions::GoSouth:
-            directionToMove = Room::JoiningDirections::South;
-            break;
-        case PlayerOptions::GoWest:
-            directionToMove = Room::JoiningDirections::West;
-            break;
-        default:
-            break;
-        }
-
-        const Room* pPlayerCurrentRoom = m_player.GetCurrentRoom();
-        const Room* pNewRoom = pPlayerCurrentRoom->GetRoom(directionToMove);
-
-        if (pNewRoom != nullptr)
-        {
-            m_player.SetCurrentRoom(pNewRoom);
-        }
-        else
-        {
-            const char* strDirection = "North";
-            switch (selectedOption) {
-            case PlayerOptions::GoEast:
-                strDirection = "East";
-                break;
-            case PlayerOptions::GoSouth:
-                strDirection = "South";
-                break;
-            case PlayerOptions::GoWest:
-                strDirection = "West";
-                break;
-            }
-
-            std::cout << "There is no room to the "
-                << strDirection << std::endl << std::endl;
-        }
-    }
 }
