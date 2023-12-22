@@ -3,13 +3,15 @@
 #include "Room.h"
 #include "MoveOption.h"
 #include "QuitOption.h"
+#include <array>
 
 #pragma once
 class Game
 {
 private:
 	static const unsigned int m_numberOfRooms = 4;
-	Room m_rooms[m_numberOfRooms];
+	using Rooms = std::array<Room, m_numberOfRooms>;
+	Rooms m_rooms;
 
 	Player m_player;
 
