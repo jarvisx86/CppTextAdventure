@@ -1,11 +1,16 @@
+#pragma once
+
+#include "AttackEnemyOption.h"
+#include "Chest.h"
+#include "Enemy.h"
+#include "MoveOption.h"
+#include "OpenChestOption.h"
 #include "Player.h"
 #include "PlayerOptions.h"
-#include "Room.h"
-#include "MoveOption.h"
 #include "QuitOption.h"
+#include "Room.h"
 #include <array>
 
-#pragma once
 class Game
 {
 private:
@@ -15,20 +20,26 @@ private:
 
 	Player m_player;
 
+	AttackEnemyOption m_attackDragonOption;
+	AttackEnemyOption m_attackOrcOption;
 	MoveOption m_moveNorthOption;
 	MoveOption m_moveEastOption;
 	MoveOption m_moveSouthOption;
 	MoveOption m_moveWestOption;
+	OpenChestOption m_openChestOption;
 	QuitOption m_quitOption;
 
-	static const unsigned int m_numberOfOptions = 5;
-	Option* m_options[m_numberOfOptions];
+	Sword m_sword;
+	Chest m_swordChest;
+
+	Enemy m_dragon;
+	Enemy m_orc;
 
 	void InitializeRooms();
 	void WelcomePlayer();
-	void GivePlayerOptions();
-	void GetPlayerInput(std::string& playerInput);
-	PlayerOptions EvaluateInput(std::string& playerInput);
+	void GivePlayerOptions() const;
+	void GetPlayerInput(std::stringstream& playerInputStream) const;
+	PlayerOptions EvaluateInput(std::stringstream& playerInputStream);
 
 public:
 	Game();

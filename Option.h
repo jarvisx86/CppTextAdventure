@@ -2,7 +2,8 @@
 
 #include "PlayerOptions.h"
 #include <string>
-#include "Player.h"
+
+class Player;
 
 class Option
 {
@@ -34,6 +35,6 @@ public:
 		return m_chosenOption;
 	}
 
-	virtual bool Evaluate(const std::string& optionText, Player& player) = 0;
+	virtual void Evaluate(Player& player) = 0;
 };
 

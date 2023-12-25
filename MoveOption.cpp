@@ -1,46 +1,39 @@
 #include "MoveOption.h"
+#include "Player.h"
 #include <iostream>
 
-bool MoveOption::Evaluate(const std::string& optionText, Player& player)
+void MoveOption::Evaluate(Player& player)
 {
-    bool handled = false;
+  
+    Room* pPlayerCurrentRoom = player.GetCurrentRoom();
+    Room* pNewRoom = pPlayerCurrentRoom->GetRoom(m_directionToMove);
 
-    if (m_optionText.compare(optionText) == 0)
+    if (pNewRoom != nullptr)
     {
-        const Room* pPlayerCurrentRoom = player.GetCurrentRoom();
-        const Room* pNewRoom = pPlayerCurrentRoom->GetRoom(m_directionToMove);
-
-        if (pNewRoom != nullptr)
+        player.SetCurrentRoom(pNewRoom);
+        std::cout << "You have chosen to "
+            << m_outputText << std::endl << std::endl;
+    }
+    else
+    {
+        const char* strDirection = "North";
+        switch (m_chosenOption) 
         {
-            player.SetCurrentRoom(pNewRoom);
-            std::cout << "You have chosen to "
-                << m_outputText << std::endl << std::endl;
-        }
-        else
-        {
-            const char* strDirection = "North";
-            switch (m_chosenOption) 
-            {
-                case PlayerOptions::GoEast:
-                    strDirection = "East";
-                    break;
+            case PlayerOptions::GoEast:
+                strDirection = "East";
+                break;
 
-                case PlayerOptions::GoSouth:
-                    strDirection = "South";
-                    break;
+            case PlayerOptions::GoSouth:
+                strDirection = "South";
+                break;
 
-                case PlayerOptions::GoWest:
-                    strDirection = "West";
-                    break;
-            }
-
-            std::cout << "There is no room to the "
-                << strDirection << std::endl << std::endl;
+            case PlayerOptions::GoWest:
+                strDirection = "West";
+                break;
         }
 
-        handled = true;
-
+        std::cout << "There is no room to the "
+            << strDirection << std::endl << std::endl;
     }
 
-    return handled;
 }
