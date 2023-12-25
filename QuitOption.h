@@ -1,5 +1,7 @@
 #pragma once
 #include "Option.h"
+#include "PlayerOptions.h"
+
 class QuitOption :
     public Option
 {
@@ -15,7 +17,7 @@ public:
 
     bool ShouldQuit() const { return m_shouldQuit; }
     
-    virtual bool Evaluate(const std::string& optionText, Player& player);
+    void Evaluate(Player& player);
 
 };
 

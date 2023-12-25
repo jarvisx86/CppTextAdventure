@@ -1,5 +1,9 @@
 #pragma once
 #include "Option.h"
+#include "Room.h"
+
+class Player;
+
 class MoveOption :
     public Option
 {
@@ -15,6 +19,6 @@ public:
     {
     }
 
-    virtual bool Evaluate(const std::string& optionText, Player& player);
+    void Evaluate(Player& player) override;
 };
 

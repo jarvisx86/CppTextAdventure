@@ -1,21 +1,33 @@
 #pragma once
-#include <string>
+
 #include "Entity.h"
-#include "Room.h"
+#include "Item.h"
+#include "Sword.h"
+#include <string>
+#include <vector>
+
+class Room;
 
 class Player : public Entity
 {
 private:
 	std::string m_name;
-	const Room* m_pCurrentRoom;
+	Room* m_pCurrentRoom;
+
+	using Items = std::vector<Item*>;
+	Items m_items;
 
 public:
 	std::string GetPlayerName();
 
 	void SetPlayerName(std::string playerName);
 
-	void SetCurrentRoom(const Room* pCurrentRoom);
+	void SetCurrentRoom(Room* pCurrentRoom);
 
-	const Room* GetCurrentRoom() const;
+	Room* GetCurrentRoom() const;
+
+	void AddItem(const Item* item);
+
+	bool HasWeapon();
 };
 
