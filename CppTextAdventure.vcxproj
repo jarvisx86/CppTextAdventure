@@ -133,6 +133,9 @@
     <ClCompile Include="CppTextAdventure.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Event.cpp" />
+    <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="MoveOption.cpp" />
@@ -141,6 +144,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuitOption.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Sword.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +152,9 @@
     <ClInclude Include="Chest.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventHandler.h" />
+    <ClInclude Include="EventManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="MoveOption.h" />
@@ -157,6 +164,7 @@
     <ClInclude Include="PlayerOptions.h" />
     <ClInclude Include="QuitOption.h" />
     <ClInclude Include="Room.h" />
+    <ClInclude Include="Singleton.h" />
     <ClInclude Include="Sword.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
