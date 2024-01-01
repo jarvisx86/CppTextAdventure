@@ -1,6 +1,7 @@
 #pragma once
-template <typename T>
+#include <cassert>
 
+template <typename T>
 class Singleton
 {
 private:
@@ -12,7 +13,7 @@ public:
 		assert(m_instance == nullptr);
 		if (m_instance == nullptr) 
 		{
-			m_instance == static_cast<T*>(this);
+			m_instance = static_cast<T*>(this);
 		}
 	}
 
@@ -31,4 +32,7 @@ public:
 		return m_instance;
 	}
 };
+
+template <typename T>
+T* Singleton<T>::m_instance = nullptr;
 
