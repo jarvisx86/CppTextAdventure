@@ -81,7 +81,7 @@ inline bool RegisterEvent(EventID eventId)
 template<typename T>
 inline void AttachEvent(EventID eventId, T* eventHandler)
 {
-	static_assert(std::is_base_of<eventHandler, T>::value,
+	static_assert(std::is_base_of<EventHandler, T>::value,
 		"Class provided is not derived from EventHandler");
 
 	EventManager* pEventManager = EventManager::GetSingletonPtr();
@@ -96,7 +96,7 @@ inline void AttachEvent(EventID eventId, T* eventHandler)
 template<typename T>
 inline void DetachEvent(EventID eventId, T* eventHandler)
 {
-	static_assert(std::is_base_of<eventHandler, T>::value,
+	static_assert(std::is_base_of<EventHandler, T>::value,
 		"Class provided is not derived from EventHandler");
 
 	EventManager* pEventManager = EventManager::GetSingletonPtr();

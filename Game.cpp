@@ -1,6 +1,21 @@
 #include "Game.h"
 #include <iostream>
 #include <sstream>
+#include <cassert>
+#include "EventManager.h"
+#include "SDBMCalculator.h"
+
+namespace
+{
+    constexpr char* const QuitEventString = "QuitEvent";
+    constexpr int QuitEventStringLength =
+#ifndef constexpr
+        constexpr_strlen(QuitEventString);
+#else
+        9;
+#endif
+    constexpr int QuitEvent = SDBMCalculator<QuitEventStringLength>::CalculateValue(QuitEventString);
+}
 
 Game::Game() 
     : m_attackDragonOption(&m_dragon, "Attack Dragon")
@@ -19,6 +34,10 @@ Game::Game()
 
 void Game::RunGame()
 {
+    new EventManager();
+    RegisterEvent(QuitEvent);
+    AttachEvent(QuitEvent, this);
+
     InitializeRooms();
 
     WelcomePlayer();
@@ -33,8 +52,7 @@ void Game::RunGame()
         std::stringstream playerInputStream;
         GetPlayerInput(playerInputStream);
 
-        PlayerOptions selectedOption = EvaluateInput(playerInputStream);
-        playerQuit = selectedOption == PlayerOptions::Quit;
+        EvaluateInput(playerInputStream);
 
         playerWon = m_dragon.IsAlive() == false && m_orc.IsAlive() == false;
     }
@@ -46,7 +64,17 @@ void Game::RunGame()
         std::string input;
         std::cin >> input;
     }
-    
+
+    DetachEvent(QuitEvent, this);
+    delete EventManager::GetSingletonPtr();
+}
+
+void Game::HandleEvent(const Event* pEvent)
+{
+    if (pEvent->GetID() == QuitEvent) 
+    {
+        m_playerQuit = true;
+    }
 }
 
 void Game::InitializeRooms()
@@ -87,10 +115,10 @@ void Game::InitializeRooms()
 void Game::WelcomePlayer()
 {
     std::cout << "Hello! Welcome to Adventure!" << std::endl;
-    std::cout << "Please enter your name: ";
-
+    std::cout << "Please enter your name (without spaces): ";
     std::string playerName;
-    std::cin >> playerName;
+    
+    std::getline(std::cin, playerName);
 
     std::cout << "Hello " << playerName << "!" << std::endl;
 
