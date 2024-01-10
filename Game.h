@@ -3,6 +3,7 @@
 #include "AttackEnemyOption.h"
 #include "Chest.h"
 #include "Enemy.h"
+#include "EventHandler.h"
 #include "MoveOption.h"
 #include "OpenChestOption.h"
 #include "Player.h"
@@ -12,6 +13,7 @@
 #include <array>
 
 class Game
+	: public EventHandler
 {
 private:
 	static const unsigned int m_numberOfRooms = 4;
@@ -35,6 +37,8 @@ private:
 	Enemy m_dragon;
 	Enemy m_orc;
 
+	bool m_playerQuit{ false };
+
 	void InitializeRooms();
 	void WelcomePlayer();
 	void GivePlayerOptions() const;
@@ -45,5 +49,8 @@ public:
 	Game();
 
 	void RunGame();
+
+	// Inherited via EventHandler
+	void HandleEvent(const Event* event) override;
 };
 

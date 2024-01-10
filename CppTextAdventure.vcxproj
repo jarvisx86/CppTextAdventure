@@ -144,6 +144,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="QuitOption.cpp" />
     <ClCompile Include="Room.cpp" />
+    <ClCompile Include="SDBMCalculator.h" />
     <ClCompile Include="Singleton.cpp" />
     <ClCompile Include="Sword.cpp" />
   </ItemGroup>
